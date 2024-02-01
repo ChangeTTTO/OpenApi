@@ -1,0 +1,18 @@
+server:
+  port: 9999
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=source, Pn #????
+      routes:
+        - id: api_route
+          uri: http://localhost:8888
+          predicates:
+            - Path=/
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
