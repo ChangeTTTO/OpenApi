@@ -1,7 +1,6 @@
 package com.pn.mapper;
 
-import com.pn.domain.User;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.pn.domain.po.User;
 
 /**
 * @author 11473
@@ -9,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2024-02-02 05:45:17
 * @Entity generator.domain.User
 */
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper {
 
 }
 

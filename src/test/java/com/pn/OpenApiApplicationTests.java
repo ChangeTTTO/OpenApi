@@ -1,4 +1,4 @@
-package com.pn;
+package java.com.pn;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,6 +1,5 @@
 package com.pn.service.impl;
-
-
+import com.pn.service.UserService;
 
 /**
 * @author pn
@@ -8,6 +7,8 @@ package com.pn.service.impl;
 * @createDate 2024-02-02 05:45:17
 */
 
+public class UserServiceImpl implements UserService {
+}
 
 
 

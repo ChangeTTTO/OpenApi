@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OpenApi.iml" filepath="$PROJECT_DIR$/OpenApi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/getway.iml" filepath="$PROJECT_DIR$/getway.iml" />
     </modules>
   </component>
 </project>

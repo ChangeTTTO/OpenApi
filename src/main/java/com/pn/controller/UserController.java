@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody UserLoginDto user){
-        return Result.success("登陆成功");
+        if (user==null){
+            return Result.error("参数错误");
+        }
+        if (user.getUserAccount().length()<2 || user.getPassword().length()<2){
+            return Result.error("数据格式不正确");
+        }
+        return Result.success(user);
     }
 }
