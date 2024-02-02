@@ -25,6 +25,11 @@ public class InterfaceInfoServiceImpl implements InterfaceInfoService {
     private  InterfaceInfoMapper interfaceInfoMapper;
     @Override
     public ArrayList<InterfaceInfoVo> getInterfaceInfo(int currentPage, int pageSize) {
-        return interfaceInfoMapper.getInterfaceInfo(currentPage,pageSize);
+        return interfaceInfoMapper.getInterfaceInfoPage(currentPage,pageSize);
+    }
+
+    @Override
+    public InterfaceInfo getInterfaceInfo(int id) {
+        return interfaceInfoMapper.getInterfaceInfo(id);
     }
 }

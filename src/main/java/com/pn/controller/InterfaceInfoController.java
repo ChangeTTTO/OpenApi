@@ -17,14 +17,21 @@ import org.springframework.web.bind.annotation.*;
  * @since 2024-02-02
  */
 @RestController
-@RequestMapping("/interface")
+@RequestMapping("/interfaceInfo")
 @Tag(name = "接口信息")
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
-    @PostMapping("/all")
+    @GetMapping("/all")
     @Operation(summary = "分页获取所有接口信息")
-    public Result getInterfaceInfo(int currentPage,int pageSize){
+    public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
         return Result.success(interfaceInfoService.getInterfaceInfo(currentPage,pageSize));
     }
+    @GetMapping("/{id}")
+    @Operation(summary = "查看接口信息")
+    public Result getInterfaceInfo(@PathVariable int id){
+        return Result.success(interfaceInfoService.getInterfaceInfo(id));
+    }
+
+
 }
