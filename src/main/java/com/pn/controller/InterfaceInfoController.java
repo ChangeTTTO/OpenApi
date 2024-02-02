@@ -22,9 +22,14 @@ import org.springframework.web.bind.annotation.*;
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
-    @PostMapping("/all")
+    @GetMapping("/all")
     @Operation(summary = "分页获取所有接口信息")
-    public Result getInterfaceInfo(int currentPage,int pageSize){
+    public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
         return Result.success(interfaceInfoService.getInterfaceInfo(currentPage,pageSize));
+    }
+    @GetMapping
+    @Operation(summary = "查看接口信息")
+    public Result getInterfaceInfo(int id){
+        return Result.success(interfaceInfoService.getInterfaceInfo(id));
     }
 }

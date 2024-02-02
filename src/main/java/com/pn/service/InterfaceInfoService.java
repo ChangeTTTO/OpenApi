@@ -17,5 +17,5 @@ import java.util.ArrayList;
 public interface InterfaceInfoService{
 
     ArrayList<InterfaceInfoVo> getInterfaceInfo(int currentPage, int pageSize);
-
+    InterfaceInfo getInterfaceInfo(int id);
 }

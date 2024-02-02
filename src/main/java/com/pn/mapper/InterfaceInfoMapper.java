@@ -18,6 +18,7 @@ import java.util.ArrayList;
  */
 @Repository
 public interface InterfaceInfoMapper {
-    ArrayList<InterfaceInfoVo> getInterfaceInfo(int currentPage, int pageSize);
+    ArrayList<InterfaceInfoVo> getInterfaceInfoPage(int currentPage, int pageSize);
+    InterfaceInfo getInterfaceInfo(int id);
 }
 
