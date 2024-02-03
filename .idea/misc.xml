@@ -8,11 +8,16 @@
         <option value="$PROJECT_DIR$/getway/pom.xml" />
         <option value="$PROJECT_DIR$/api/pom.xml" />
         <option value="$PROJECT_DIR$/interfaceSDK/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/OpenFeign/pom.xml" />
+        <option value="$PROJECT_DIR$/Api/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/api/pom.xml" />
+        <option value="$PROJECT_DIR$/Api/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
         <option value="$PROJECT_DIR$/getway/pom.xml" />
         <option value="$PROJECT_DIR$/user/pom.xml" />
       </set>
