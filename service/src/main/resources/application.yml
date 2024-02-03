@@ -8,7 +8,7 @@ spring:
     nacos:
       server-addr: localhost:8848
   application:
-    name: OpenApi
+    name: service
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

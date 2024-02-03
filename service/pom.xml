@@ -24,6 +24,12 @@
             <artifactId>mybatis-spring</artifactId>
             <version>3.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.pn</groupId>
+            <artifactId>OpenFeign</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
