@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="OpenApi" />
+        <module name="interfaceSDK" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
       <module name="OpenApi" options="-parameters" />
       <module name="api" options="" />
       <module name="getway" options="-parameters" />
+      <module name="interfaceSDK" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>
   </component>
