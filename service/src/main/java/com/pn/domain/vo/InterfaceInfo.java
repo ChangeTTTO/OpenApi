@@ -4,12 +4,18 @@ import lombok.Data;
 
 @Data
 public class InterfaceInfo {
-    
+    /**
+     * 主键id
+     */
+    private Long id;
     /**
      * 描述
      */
     private String description;
-
+    /**
+     * 接口名
+     */
+    private String name;
     /**
      * 接口地址
      */

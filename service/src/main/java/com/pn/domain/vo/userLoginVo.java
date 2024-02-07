@@ -1,24 +1,10 @@
-package com.pn.domain.po;
-
+package com.pn.domain.vo;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
-
-/**
- * 用户
- * @TableName user
- */
-
 @Data
-public class User implements Serializable {
-    /**
-     * id
-     */
-
-    private Long id;
-
+public class userLoginVo {
     /**
      * 用户昵称
      */
@@ -43,22 +29,10 @@ public class User implements Serializable {
      * 用户角色：user / admin
      */
     private String userRole;
-
-    /**
-     * 密码
-     */
-    private String userPassword;
-
     /**
      * 公钥
      */
     private String publicKey;
-
-    /**
-     * 私钥
-     */
-    private String privateKey;
-
     /**
      * 创建时间
      */
@@ -68,13 +42,4 @@ public class User implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
-    /**
-     * 是否删除
-     */
-    private Integer isDelete;
-
-
-
-
 }

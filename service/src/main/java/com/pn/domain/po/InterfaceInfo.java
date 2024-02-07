@@ -28,7 +28,7 @@ public class InterfaceInfo implements Serializable {
     private Long id;
 
     /**
-     * 名称
+     * 接口名
      */
     private String name;
 

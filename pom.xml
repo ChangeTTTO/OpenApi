@@ -92,6 +92,14 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
             <version>2022.0.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

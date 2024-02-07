@@ -7,7 +7,7 @@ public class UserLoginDto {
     /**
      * 账号
      */
-    private String userAccount;
+    private String email;
     /**
      * 密码
      */

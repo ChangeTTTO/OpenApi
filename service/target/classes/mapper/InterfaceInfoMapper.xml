@@ -3,7 +3,7 @@
 <mapper namespace="com.pn.mapper.InterfaceInfoMapper">
 
     <select id="getInterfaceInfoPage" resultType="com.pn.domain.vo.InterfaceInfoVo">
-        select id,description from memo.interface_info limit #{currentPage},#{pageSize}
+        select * from memo.interface_info limit #{currentPage},#{pageSize}
     </select>
     <select id="getInterfaceInfo" resultType="com.pn.domain.po.InterfaceInfo">
         select *  from memo.interface_info where id=#{id}

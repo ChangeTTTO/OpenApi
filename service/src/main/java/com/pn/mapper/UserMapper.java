@@ -1,5 +1,8 @@
 package com.pn.mapper;
 
+import com.pn.domain.po.User;
+import com.pn.domain.vo.userLoginVo;
+
 /**
 * @author 11473
 * @description 针对表【user(用户)】的数据库操作Mapper
@@ -8,6 +11,7 @@ package com.pn.mapper;
 */
 public interface UserMapper {
 
+    userLoginVo getUserByEmail(String email);
 }
 
 
