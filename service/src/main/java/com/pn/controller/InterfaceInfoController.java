@@ -1,6 +1,11 @@
 package com.pn.controller;
 
 
+import cn.hutool.core.util.ObjUtil;
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.pn.api.controller.DogController;
 import com.pn.api.controller.Test;
 import com.pn.common.Result;
 import com.pn.domain.dto.invokeDTO;
@@ -9,6 +14,7 @@ import com.pn.service.InterfaceInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +30,13 @@ import java.lang.reflect.Method;
  */
 @RestController
 @RequestMapping("/interfaceInfo")
+@RequiredArgsConstructor
 @Tag(name = "接口信息")
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
 
+    private final ApiClient apiClient;
     @GetMapping("/all")
     @Operation(summary = "分页获取所有接口信息")
     public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
@@ -41,21 +49,18 @@ public class InterfaceInfoController {
     }
     @PostMapping("/invoke")
     public Result invokeInterface(@RequestBody invokeDTO invokeDTO) {
-        try {
-            // 1.获取 Test 类型
-            Test test = new Test();
-            Class<?> clientClass = test.getClass();
-            // 2.获取名为 参数name 的方法
-            Method method = clientClass.getMethod(invokeDTO.getMethodName(), Object.class);
-            return Result.success(method.invoke(test,invokeDTO.getParams()));
+        Object invoke;
+        String interfaceName = invokeDTO.getMethodName();
+        Object params = invokeDTO.getParams();
+        if (ObjUtil.isEmpty(params)){
+             invoke = ReflectUtil.invoke(new DogController(), interfaceName);
+        }else {
+            invoke = ReflectUtil.invoke(new DogController(), interfaceName,params);
+        }
 
+            return Result.success(invoke);
 
-        } catch (Exception e) {
-            // 处理异常
-            e.printStackTrace();
-            return null; // 或者返回适当的错误信息
         }
     }
 
-    }
 
