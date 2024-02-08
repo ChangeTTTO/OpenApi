@@ -53,9 +53,9 @@ public class InterfaceInfoController {
         String interfaceName = invokeDTO.getMethodName();
         Object params = invokeDTO.getParams();
         if (ObjUtil.isEmpty(params)){
-             invoke = ReflectUtil.invoke(new DogController(), interfaceName);
+             invoke = ReflectUtil.invoke(apiClient, interfaceName);
         }else {
-            invoke = ReflectUtil.invoke(new DogController(), interfaceName,params);
+            invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
         }
 
             return Result.success(invoke);
