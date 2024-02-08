@@ -10,9 +10,17 @@ public class invokeDTO {
     /**
      * 需要调用的方法名
      */
-    private String methodName;
+    private String interfaceName;
     /**
      * 需要调用的方法的参数
      */
-    private Object params;
+    private Object requestParams;
+    /**
+     * 接口id
+     */
+    private String interfaceId;
+    /**
+     * 调用人id
+     */
+    private String userId;
 }

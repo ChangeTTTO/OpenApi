@@ -9,8 +9,10 @@ import com.pn.api.controller.DogController;
 import com.pn.api.controller.Test;
 import com.pn.common.Result;
 import com.pn.domain.dto.invokeDTO;
+import com.pn.mapper.CommonMapper;
 import com.pn.openfeign.client.apiClient.ApiClient;
 import com.pn.service.InterfaceInfoService;
+import com.pn.service.UserInterfaceInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -35,8 +37,10 @@ import java.lang.reflect.Method;
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
-
+    private final UserInterfaceInfoService userInterfaceInfoService;
     private final ApiClient apiClient;
+    private final CommonMapper commonMapper;
+
     @GetMapping("/all")
     @Operation(summary = "分页获取所有接口信息")
     public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
@@ -48,18 +52,19 @@ public class InterfaceInfoController {
         return Result.success(interfaceInfoService.getInterfaceInfo(id));
     }
     @PostMapping("/invoke")
+    @Operation(summary = "目标接口调用")
     public Result invokeInterface(@RequestBody invokeDTO invokeDTO) {
         Object invoke;
-        String interfaceName = invokeDTO.getMethodName();
-        Object params = invokeDTO.getParams();
+        String interfaceName = invokeDTO.getInterfaceName();
+        Object params = invokeDTO.getRequestParams();
         if (ObjUtil.isEmpty(params)){
              invoke = ReflectUtil.invoke(apiClient, interfaceName);
         }else {
             invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
         }
-
+        //剩余调用次数-1
+        commonMapper.decrementCount("user_interface_info",invokeDTO.getInterfaceId(),"leftNum");
             return Result.success(invoke);
-
         }
     }
 

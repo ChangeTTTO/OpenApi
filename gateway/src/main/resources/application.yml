@@ -7,7 +7,7 @@ spring:
         - AddResponseHeader=source, Pn #流量染色
       routes:
         - id: api_route
-          uri: http://127.0.0.1:8080
+          uri: http://127.0.0.1:1111
           predicates:
             - Path=/*
 logging:
