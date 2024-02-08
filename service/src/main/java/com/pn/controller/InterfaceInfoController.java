@@ -62,7 +62,7 @@ public class InterfaceInfoController {
         }else {
             invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
         }
-        //剩余调用次数-1
+        //该接口剩余调用次数-1
         commonMapper.decrementCount("user_interface_info",invokeDTO.getInterfaceId(),"leftNum");
             return Result.success(invoke);
         }
