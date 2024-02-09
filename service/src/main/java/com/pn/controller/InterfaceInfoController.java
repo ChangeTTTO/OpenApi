@@ -3,26 +3,17 @@ package com.pn.controller;
 
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import com.pn.api.controller.DogController;
-import com.pn.api.controller.Test;
 import com.pn.common.Result;
 import com.pn.domain.dto.invokeDTO;
 import com.pn.domain.po.UserInterfaceInfo;
 import com.pn.mapper.CommonMapper;
-import com.pn.openfeign.client.apiClient.ApiClient;
+import com.pn.client.apiClient.ApiClient;
 import com.pn.service.InterfaceInfoService;
 import com.pn.service.UserInterfaceInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
-
-import java.lang.reflect.Method;
 
 /**
  * <p>
@@ -33,14 +24,17 @@ import java.lang.reflect.Method;
  */
 @RestController
 @RequestMapping("/interfaceInfo")
-@RequiredArgsConstructor
 @Tag(name = "接口信息")
+
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
-    private final UserInterfaceInfoService userInterfaceInfoService;
-    private final ApiClient apiClient;
-    private final CommonMapper commonMapper;
+    @Resource
+    private  UserInterfaceInfoService userInterfaceInfoService;
+    @Resource
+    private  ApiClient apiClient;
+    @Resource
+    private  CommonMapper commonMapper;
 
     @GetMapping("/all")
     @Operation(summary = "分页获取所有接口信息")

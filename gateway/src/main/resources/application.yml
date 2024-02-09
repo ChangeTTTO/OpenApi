@@ -1,14 +1,19 @@
 server:
   port: 9999
 spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway
   cloud:
     gateway:
       default-filters:
         - AddResponseHeader=source, Pn #流量染色
       routes:
         - id: api_route
-          uri: http://127.0.0.1:1111
+          uri: lb://service
           predicates:
+            - Path=/**
   # redis 配置
   data:
     redis:
@@ -21,3 +26,4 @@ logging:
       springframework:
         cloud:
           gateway: trace
+

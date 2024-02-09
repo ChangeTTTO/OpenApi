@@ -1,8 +1,6 @@
 package com.pn.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.asymmetric.RSA;
 import com.pn.common.Result;
 import com.pn.domain.dto.UserLoginDto;
 import com.pn.domain.dto.userRegisterDTO;
@@ -11,10 +9,6 @@ import com.pn.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 
 @CrossOrigin("http://localhost:5173")
 @RequestMapping("/user")
@@ -52,7 +46,7 @@ public class UserController {
     }
     @GetMapping("/findUserByEmail")
     @Operation(summary = "根据邮箱查用户")
-    public Result findUserByEmail(@RequestBody UserLoginDto user){
-        return Result.success(userService.findUserByEmail(user.getEmail()));
+    public userLoginVo findUserByEmail( String email){
+        return userService.findUserByEmail(email);
     }
 }

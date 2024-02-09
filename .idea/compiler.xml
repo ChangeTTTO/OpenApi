@@ -7,8 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="OpenFeign" />
-        <module name="interfaceSDK" />
         <module name="api" />
         <module name="gateway" />
         <module name="service" />
@@ -18,6 +16,8 @@
       <module name="Api" target="17" />
       <module name="common" target="17" />
       <module name="getway" target="17" />
+      <module name="interfaceSDK" target="17" />
+      <module name="OpenFeign" target="17" />
       <module name="user" target="17" />
     </bytecodeTargetLevel>
   </component>

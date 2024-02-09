@@ -4,6 +4,9 @@
 server:
   port: 1111
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
   cloud:
     nacos:
       server-addr: localhost:8848

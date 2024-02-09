@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         //获得公钥
         String publicKey = rsa.getPublicKeyBase64();
         //用私钥对邮箱进行签名
-        String sign = rsa.encryptHex(email, CharsetUtil.CHARSET_UTF_8, KeyType.PrivateKey);
+        String sign = rsa.encryptHex(email, CharsetUtil.CHARSET_UTF_8, KeyType.valueOf(privateKey));
         //写入数据
         userMapper.register(email,password,publicKey,privateKey,sign);
     }
