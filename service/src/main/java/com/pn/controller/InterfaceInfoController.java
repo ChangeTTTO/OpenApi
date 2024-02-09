@@ -9,6 +9,7 @@ import com.pn.api.controller.DogController;
 import com.pn.api.controller.Test;
 import com.pn.common.Result;
 import com.pn.domain.dto.invokeDTO;
+import com.pn.domain.po.UserInterfaceInfo;
 import com.pn.mapper.CommonMapper;
 import com.pn.openfeign.client.apiClient.ApiClient;
 import com.pn.service.InterfaceInfoService;
@@ -57,13 +58,21 @@ public class InterfaceInfoController {
         Object invoke;
         String interfaceName = invokeDTO.getInterfaceName();
         Object params = invokeDTO.getRequestParams();
+        //1.如果该接口剩余调用次数为0，将不允许调用
+        UserInterfaceInfo user = userInterfaceInfoService.findLeftNumByUserId(invokeDTO.getUserId());
+        Integer leftNum = user.getLeftNum();
+        if (leftNum==0){
+            return Result.error("调用次数已耗尽");
+        }
+        //2.根据有无参数调用目标接口
         if (ObjUtil.isEmpty(params)){
              invoke = ReflectUtil.invoke(apiClient, interfaceName);
         }else {
             invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
         }
-        //该接口剩余调用次数-1
+        //3.调用后该接口剩余调用次数-1
         commonMapper.decrementCount("user_interface_info",invokeDTO.getInterfaceId(),"leftNum");
+
             return Result.success(invoke);
         }
     }

@@ -10,9 +10,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class GlobaFilter implements GlobalFilter, Ordered {
+public class RequestGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
         return null;
     }
 

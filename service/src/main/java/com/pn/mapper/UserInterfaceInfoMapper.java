@@ -16,4 +16,6 @@ public interface UserInterfaceInfoMapper extends BaseMapper<UserInterfaceInfo> {
     void getCount(String interfaceId, String userId);
 
     UserInterfaceInfo findInterfaceIdByUserId(String userId);
+
+    UserInterfaceInfo findLeftNumByUserId(String userId);
 }

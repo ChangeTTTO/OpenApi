@@ -29,4 +29,9 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     public UserInterfaceInfo findInterfaceIdByUserId(String userId) {
         return userInterfaceInfoMapper.findInterfaceIdByUserId(userId);
     }
+
+    @Override
+    public UserInterfaceInfo findLeftNumByUserId(String userId) {
+        return userInterfaceInfoMapper.findLeftNumByUserId(userId);
+    }
 }

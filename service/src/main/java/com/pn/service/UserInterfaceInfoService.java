@@ -16,4 +16,5 @@ public interface UserInterfaceInfoService extends IService<UserInterfaceInfo> {
      void getCount(String interfaceId, String userId);
 
      UserInterfaceInfo findInterfaceIdByUserId(String userId);
+     UserInterfaceInfo findLeftNumByUserId(String userId);
 }

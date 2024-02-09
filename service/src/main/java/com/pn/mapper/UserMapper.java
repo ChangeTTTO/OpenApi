@@ -14,6 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     userLoginVo getUserByEmail(String email);
+
+    void register(String email, String password,String publicKey,String privateKey);
 }
 
 
