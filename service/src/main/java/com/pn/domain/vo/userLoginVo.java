@@ -34,6 +34,10 @@ public class userLoginVo {
      */
     private String publicKey;
     /**
+     * 签名
+     */
+    private  String sign;
+    /**
      * 创建时间
      */
     private Date createTime;

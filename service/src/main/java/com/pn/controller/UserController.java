@@ -1,5 +1,6 @@
 package com.pn.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.asymmetric.RSA;
 import com.pn.common.Result;
@@ -35,7 +36,8 @@ public class UserController {
             return  Result.error("用户不存在");
         }
 
-        //校验完成，登陆成功
+        //校验完成，登陆成功,将session保存到redis
+        StpUtil.login(user.getEmail());
         return Result.success(dbUser);
     }
     @PostMapping("/register")

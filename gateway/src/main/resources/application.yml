@@ -9,7 +9,12 @@ spring:
         - id: api_route
           uri: http://127.0.0.1:1111
           predicates:
-            - Path=/*
+  # redis 配置
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      database: 0
 logging:
   level:
     org:
