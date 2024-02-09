@@ -1,4 +1,7 @@
 package com.pn.service.impl;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import com.pn.common.RSAUtil;
 import com.pn.domain.vo.userLoginVo;
@@ -28,7 +31,10 @@ public class UserServiceImpl implements UserService {
         String privateKey = rsa.getPrivateKeyBase64();
         //获得公钥
         String publicKey = rsa.getPublicKeyBase64();
-       userMapper.register(email,password,publicKey,privateKey);
+        //用私钥对邮箱进行签名
+        String sign = rsa.encryptHex(email, CharsetUtil.CHARSET_UTF_8, KeyType.PrivateKey);
+        //写入数据
+        userMapper.register(email,password,publicKey,privateKey,sign);
     }
 
     @Override

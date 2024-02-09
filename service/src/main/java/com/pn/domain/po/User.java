@@ -58,7 +58,10 @@ public class User implements Serializable {
      * 私钥
      */
     private String privateKey;
-
+    /**
+     * 签名
+     */
+    private String sign;
     /**
      * 创建时间
      */
