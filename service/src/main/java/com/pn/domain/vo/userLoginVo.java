@@ -6,6 +6,10 @@ import java.util.Date;
 @Data
 public class userLoginVo {
     /**
+     * 用户id
+     */
+    private Long id;
+    /**
      * 用户昵称
      */
     private String username;

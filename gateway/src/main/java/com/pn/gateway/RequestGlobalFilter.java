@@ -31,10 +31,10 @@ public class RequestGlobalFilter implements GlobalFilter, Ordered {
         //1.从请求头里获取publicKey和sign
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-        String publicKey = headers.getFirst("OpenApi-Public-Key");
+            String publicKey = headers.getFirst("OpenApi-Public-Key");
         String signature = headers.getFirst("OpenApi-Signature");
         //2.获取到登录用户的邮箱
-        String email = (String) StpUtil.getLoginId();
+        String email = StpUtil.getLoginIdAsString();
         //3.通过远程调用获取用户信息
         userLoginVo userByEmail = serviceClient.findUserByEmail(email);
         String userPublicKey = userByEmail.getPublicKey();

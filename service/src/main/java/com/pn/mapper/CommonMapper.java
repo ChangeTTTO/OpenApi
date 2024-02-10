@@ -14,9 +14,9 @@ public interface CommonMapper {
      * @param id    数据id
      * @param field 字段
      */
-    void incrementCount(@Param("table") String table,
-                        @Param("id") String id,
-                        @Param("field") String field);
+    void incrementCount( String table,
+                         String id,
+                         String field);
 
     /**
      * 对指定表，指定数据，指定列，-1
@@ -25,7 +25,7 @@ public interface CommonMapper {
      * @param id
      * @param field
      */
-    void decrementCount(@Param("table") String table,
-                        @Param("id") String id,
-                        @Param("field") String field);
+    void decrementCount( String table,
+                         String id,
+                         String field);
 }

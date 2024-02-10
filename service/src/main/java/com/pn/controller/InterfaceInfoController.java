@@ -55,6 +55,7 @@ public class InterfaceInfoController {
         //1.如果该接口剩余调用次数为0，将不允许调用
         UserInterfaceInfo user = userInterfaceInfoService.findLeftNumByUserId(invokeDTO.getUserId());
         Integer leftNum = user.getLeftNum();
+        Long id = user.getId();
         if (leftNum==0){
             return Result.error("调用次数已耗尽");
         }
@@ -65,7 +66,7 @@ public class InterfaceInfoController {
             invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
         }
         //3.调用后该接口剩余调用次数-1
-        commonMapper.decrementCount("user_interface_info",invokeDTO.getInterfaceId(),"leftNum");
+        commonMapper.decrementCount("user_interface_info", String.valueOf(id),"leftNum");
 
             return Result.success(invoke);
         }
