@@ -5,17 +5,28 @@ import com.pn.common.Result;
 import com.pn.domain.dto.UserLoginDto;
 import com.pn.domain.dto.userRegisterDTO;
 import com.pn.domain.vo.userLoginVo;
+import com.pn.mapper.UserMapper;
 import com.pn.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.RequiredArgsConstructor;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:5173")
 @RequestMapping("/user")
 @RestController
-@RequiredArgsConstructor
+@Slf4j
 public class UserController {
-    private final UserService userService;
+    @Resource
+    private UserService userService;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private RabbitTemplate rabbitTemplate;
     @PostMapping("/login")
     @Operation(summary = "登录")
     public Result login(@RequestBody UserLoginDto user){
@@ -32,6 +43,7 @@ public class UserController {
 
         //校验完成，登陆成功,将session保存到redis
         StpUtil.login(user.getEmail());
+
         return Result.success(dbUser);
     }
     @PostMapping("/register")
@@ -48,5 +60,20 @@ public class UserController {
     @Operation(summary = "根据邮箱查用户")
     public userLoginVo findUserByEmail( String email){
         return userService.findUserByEmail(email);
+    }
+    @GetMapping("/findUserByPublicKey")
+    @Operation(summary = "根据公钥查用户")
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "gateway"),
+            exchange = @Exchange(name = "amq.direct",type ="direct"),
+            key = {"findUser"}
+    ))
+    public userLoginVo findUserByPublicKey(String publicKey){
+        userLoginVo user = userMapper.findUserByPublicKey(publicKey);
+        if (user==null){
+            log.error("未查询到用户");
+        }
+        rabbitTemplate.convertAndSend("amq.direct", "getUser", user);
+        return null;
     }
 }

@@ -1,16 +1,15 @@
-package com.pn.domain.vo;
+package com.pn.gateway;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
 import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class userLoginVo  {
+public class userLoginVo {
     /**
      * 用户id
      */

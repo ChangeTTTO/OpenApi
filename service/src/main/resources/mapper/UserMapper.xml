@@ -11,4 +11,7 @@
     <select id="getUserByEmail" resultType="com.pn.domain.vo.userLoginVo" parameterType="java.lang.String">
         select * from memo.user where email = #{email}
     </select>
+    <select id="findUserByPublicKey" resultType="com.pn.domain.vo.userLoginVo">
+        select * from memo.user where publickey = #{publicKey}
+    </select>
 </mapper>

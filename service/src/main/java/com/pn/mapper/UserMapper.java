@@ -16,6 +16,8 @@ public interface UserMapper {
     userLoginVo getUserByEmail(String email);
 
     void register(String email, String password,String publicKey,String privateKey,String sign);
+
+    userLoginVo findUserByPublicKey(String publicKey);
 }
 
 

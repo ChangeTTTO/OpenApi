@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api" />
+        <module name="feign" />
         <module name="gateway" />
         <module name="service" />
       </profile>
@@ -28,6 +29,7 @@
       <module name="OpenFeign" options="-parameters" />
       <module name="api" options="-parameters" />
       <module name="common" options="" />
+      <module name="feign" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="getway" options="-parameters" />
       <module name="interfaceSDK" options="-parameters" />

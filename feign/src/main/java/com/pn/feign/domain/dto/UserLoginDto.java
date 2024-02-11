@@ -1,4 +1,4 @@
-package com.pn.gateway;
+package com.pn.feign.domain.dto;
 
 import lombok.Data;
 

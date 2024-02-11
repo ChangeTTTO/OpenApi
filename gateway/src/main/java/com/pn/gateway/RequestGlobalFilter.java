@@ -1,61 +1,65 @@
 package com.pn.gateway;
-
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
-import com.pn.client.serviceClient.serviceClient;
-import com.pn.domain.vo.userLoginVo;
 import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
-public class RequestGlobalFilter implements GlobalFilter, Ordered {
+public class RequestGlobalFilter implements GlobalFilter {
     @Resource
-    @Lazy
-    private serviceClient serviceClient;
+    private RabbitTemplate rabbitTemplate;
+    private final CompletableFuture<userLoginVo> future =new CompletableFuture<>();
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        log.error("进入网关");
+        System.out.println("成功进入");
         RSA rsa = new RSA();
-        //1.从请求头里获取publicKey和sign
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-            String publicKey = headers.getFirst("OpenApi-Public-Key");
+        String publicKey = headers.getFirst("OpenApi-Public-Key");
         String signature = headers.getFirst("OpenApi-Signature");
-        //2.获取到登录用户的邮箱
-        String email = StpUtil.getLoginIdAsString();
-        //3.通过远程调用获取用户信息
-        userLoginVo userByEmail = serviceClient.findUserByEmail(email);
-        String userPublicKey = userByEmail.getPublicKey();
-        String userSign = userByEmail.getSign();
-        //4.验证公钥的一致性：确保请求头中携带的公钥与数据库中存储的用户公钥一致。
-        if (publicKey.equals(userPublicKey)&&signature.equals(userSign)){
-            //5.使用公钥对签名进行验证
-            String decrypted = rsa.decryptStr(signature, KeyType.valueOf(publicKey));
-            //6.验证成功
-            if (decrypted.equals(email)){
-                    log.info("验证成功");
-            }else {
-                log.info("验证失败");
-            }
-        }
 
-        return null;
+
+        rabbitTemplate.convertAndSend("amq.direct", "findUser", publicKey);
+
+        future.thenAccept(user -> {
+            String userPublicKey = user.getPublicKey();
+            String userSign = user.getSign();
+            String email = user.getEmail();
+            log.error(email);
+            if (publicKey.equals(userPublicKey) && signature.equals(userSign)) {
+                String decrypted = rsa.decryptStr(signature, KeyType.valueOf(publicKey));
+                if (decrypted.equals(email)) {
+                    log.info("验证成功");
+                } else {
+                    log.info("验证失败");
+                }
+            }
+        });
+
+        return chain.filter(exchange);
     }
 
-    @Override
-    public int getOrder() {
-        return 0;
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "gateway"),
+            exchange = @Exchange(name = "amq.direct", type = "direct"),
+            key = {"getUser"}
+    ))
+    public void getUser(userLoginVo user) {
+        future.complete(user);
     }
 }
