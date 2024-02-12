@@ -29,48 +29,50 @@ import java.util.concurrent.CompletableFuture;
 public class RequestGlobalFilter implements GlobalFilter {
     @Resource
     private RabbitTemplate rabbitTemplate;
-    private final CompletableFuture<User> future =new CompletableFuture<>();
+    private final CompletableFuture<User> future = new CompletableFuture<>();
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.error("进入网关");
-        System.out.println("成功进入");
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
         String publicKey = headers.getFirst("OpenApi-Public-Key");
         String signature = headers.getFirst("OpenApi-Signature");
 
-
-        rabbitTemplate.convertAndSend("amq.direct", "findUser", publicKey);
-
-        future.thenAccept(user -> {
-            String userPublicKey = user.getPublicKey();
-            String userSign = user.getSign();
-            String email = user.getEmail();
-            String privateKey =user.getPrivateKey();
-            log.error(email);
-            if (publicKey.equals(userPublicKey) && signature.equals(userSign)) {
-                String decrypted = null;
-                Sign pen = SignUtil.sign(SignAlgorithm.SHA256withRSA,privateKey,publicKey);
+        return Mono.fromRunnable(() -> {
+            rabbitTemplate.convertAndSend("amq.direct", "findUser", publicKey);
+            future.thenAccept(user -> {
                 try {
-                    //base64转byte[]
-                    byte[] decodedBytes = Base64.getDecoder().decode(signature);
-                    boolean verify = pen.verify(email.getBytes(), decodedBytes);
-                    if (verify){
-                        System.out.println("哈哈哈哈哈哈哈哈哈");
+                    String userPublicKey = user.getPublicKey();
+                    String userSign = user.getSign();
+                    String email = user.getEmail();
+                    String privateKey = user.getPrivateKey();
+                    log.error(email);
+                    if (publicKey.equals(userPublicKey) && signature.equals(userSign)) {
+                        Sign pen = SignUtil.sign(SignAlgorithm.SHA256withRSA, privateKey, publicKey);
+                        //base64转byte[]
+                        byte[] decodedBytes = Base64.getDecoder().decode(signature);
+                        boolean verify = pen.verify(email.getBytes(), decodedBytes);
+                        //验证成功
+                        if (verify) {
+                            //通过
+                            log.info("验证通过");
+                            return;
+                        } else {
+                            throw new RuntimeException("数据签名验证失败");
+                        }
+                    } else {
+                        throw new RuntimeException("数据不完整或已被篡改");
                     }
                 } catch (Exception e) {
-                    System.out.println("发生了异常");
-                    e.printStackTrace();
+                    log.error("身份验证异常", e);
+                    throw new RuntimeException("身份验证异常", e);
                 }
-                if (decrypted.equals(email)) {
-                    System.out.println("验证成功");
-                } else {
-                    System.out.println("验证失败");
-                }
-            }
-        });
-
-        return chain.filter(exchange);
+            }).exceptionally(throwable -> {
+                log.error("身份验证异常", throwable);
+                throw new RuntimeException("身份验证异常", throwable);
+            }).join();
+        }).then(chain.filter(exchange));
     }
 
     @RabbitListener(bindings = @QueueBinding(
@@ -79,6 +81,12 @@ public class RequestGlobalFilter implements GlobalFilter {
             key = {"getUser"}
     ))
     public void getUser(User user) {
-        future.complete(user);
+        try {
+            future.complete(user);
+        } catch (Exception e) {
+            log.error("获取用户信息失败", e);
+            throw new RuntimeException("获取用户信息失败", e);
+        }
     }
 }
+
