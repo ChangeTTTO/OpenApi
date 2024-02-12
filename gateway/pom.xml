@@ -73,7 +73,13 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
             <version>4.0.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.pn</groupId>
+            <artifactId>feign</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

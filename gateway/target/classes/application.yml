@@ -1,12 +1,27 @@
 server:
   port: 9999
 spring:
-  main:
-    web-application-type: reactive
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  #  main:
+#    web-application-type: reactive
   application:
     name: gateway
   cloud:
     gateway:
+#      globalcors:
+#        add-to-simple-url-handler-mapping: true
+#        cors-configurations:
+#          '[/**]':
+#            allowedOrigins:
+#              - "http://localhost:5173"
+#            allowedMethods: "*"
+#            allowed-headers: "*"
+#            allowCredentials: true
+      #           maxAge: -1
       default-filters:
         - AddResponseHeader=source, Pn #流量染色
       routes:
@@ -14,12 +29,6 @@ spring:
           uri: lb://service
           predicates:
             - Path=/**
-  # redis 配置
-  data:
-    redis:
-      port: 6379
-      host: localhost
-      database: 0
 logging:
   level:
     org:

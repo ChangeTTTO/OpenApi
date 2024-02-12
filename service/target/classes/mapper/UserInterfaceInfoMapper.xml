@@ -12,6 +12,6 @@
     </select>
     <select id="findLeftNumByUserId" resultType="com.pn.domain.po.UserInterfaceInfo"
             parameterType="java.lang.String">
-        select leftNum from memo.user_interface_info where userId = #{userId}
+        select * from memo.user_interface_info where userId = #{userId}
     </select>
 </mapper>

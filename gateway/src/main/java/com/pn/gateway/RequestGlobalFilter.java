@@ -1,6 +1,10 @@
 package com.pn.gateway;
+import cn.hutool.crypto.SignUtil;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
+import cn.hutool.crypto.asymmetric.Sign;
+import cn.hutool.crypto.asymmetric.SignAlgorithm;
+import com.pn.feign.util.RsaUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -15,6 +19,9 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
@@ -22,12 +29,11 @@ import java.util.concurrent.CompletableFuture;
 public class RequestGlobalFilter implements GlobalFilter {
     @Resource
     private RabbitTemplate rabbitTemplate;
-    private final CompletableFuture<userLoginVo> future =new CompletableFuture<>();
+    private final CompletableFuture<User> future =new CompletableFuture<>();
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.error("进入网关");
         System.out.println("成功进入");
-        RSA rsa = new RSA();
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
         String publicKey = headers.getFirst("OpenApi-Public-Key");
@@ -40,13 +46,26 @@ public class RequestGlobalFilter implements GlobalFilter {
             String userPublicKey = user.getPublicKey();
             String userSign = user.getSign();
             String email = user.getEmail();
+            String privateKey =user.getPrivateKey();
             log.error(email);
             if (publicKey.equals(userPublicKey) && signature.equals(userSign)) {
-                String decrypted = rsa.decryptStr(signature, KeyType.valueOf(publicKey));
+                String decrypted = null;
+                Sign pen = SignUtil.sign(SignAlgorithm.SHA256withRSA,privateKey,publicKey);
+                try {
+                    //base64转byte[]
+                    byte[] decodedBytes = Base64.getDecoder().decode(signature);
+                    boolean verify = pen.verify(email.getBytes(), decodedBytes);
+                    if (verify){
+                        System.out.println("哈哈哈哈哈哈哈哈哈");
+                    }
+                } catch (Exception e) {
+                    System.out.println("发生了异常");
+                    e.printStackTrace();
+                }
                 if (decrypted.equals(email)) {
-                    log.info("验证成功");
+                    System.out.println("验证成功");
                 } else {
-                    log.info("验证失败");
+                    System.out.println("验证失败");
                 }
             }
         });
@@ -59,7 +78,7 @@ public class RequestGlobalFilter implements GlobalFilter {
             exchange = @Exchange(name = "amq.direct", type = "direct"),
             key = {"getUser"}
     ))
-    public void getUser(userLoginVo user) {
+    public void getUser(User user) {
         future.complete(user);
     }
 }

@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.pn.common.Result;
 import com.pn.domain.dto.UserLoginDto;
 import com.pn.domain.dto.userRegisterDTO;
+import com.pn.domain.po.User;
 import com.pn.domain.vo.userLoginVo;
 import com.pn.mapper.UserMapper;
 import com.pn.service.UserService;
@@ -51,7 +52,7 @@ public class UserController {
     public Result register(@RequestBody userRegisterDTO userRegisterDTO){
         userLoginVo userByEmail = userService.findUserByEmail(userRegisterDTO.getEmail());
         if (userByEmail!=null){
-            return Result.error("改邮箱已被使用");
+            return Result.error("该邮箱已被使用");
         }
         userService.register(userRegisterDTO.getEmail(),userRegisterDTO.getPassword());
             return Result.success();
@@ -68,8 +69,8 @@ public class UserController {
             exchange = @Exchange(name = "amq.direct",type ="direct"),
             key = {"findUser"}
     ))
-    public userLoginVo findUserByPublicKey(String publicKey){
-        userLoginVo user = userMapper.findUserByPublicKey(publicKey);
+    public User findUserByPublicKey(String publicKey){
+        User user = userMapper.findUserByPublicKey(publicKey);
         if (user==null){
             log.error("未查询到用户");
         }
