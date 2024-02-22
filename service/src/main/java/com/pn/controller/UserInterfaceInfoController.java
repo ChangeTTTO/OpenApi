@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/userInterfaceInfo")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserInterfaceInfoController {
     private final UserInterfaceInfoService userInterfaceInfoService;
     /**
@@ -31,7 +32,8 @@ public class UserInterfaceInfoController {
     @PostMapping("/getCount")
     @Operation(summary = "获取接口调用次数")
     public Result getCount(@RequestBody invokeDTO invokeDTO){
-        UserInterfaceInfo id = userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId());
+        //根据用户id和接口id查找数据,查看是否有对应关系
+        UserInterfaceInfo id = userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId(),invokeDTO.getInterfaceId());
         if (id!=null){
             return Result.error("不可重复获取调用次数");
         }
@@ -43,8 +45,8 @@ public class UserInterfaceInfoController {
      * 根据用户id找查接口id
      */
     @PostMapping("/findInterfaceIdByUserId")
-    @Operation(summary = "根据用户id找查接口id")
+    @Operation(summary = "根据用户id和接口id接口对应关系")
     public Result findInterfaceIdByUserId(invokeDTO invokeDTO){
-        return Result.success(userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId())) ;
+        return Result.success(userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId(),invokeDTO.getInterfaceId())) ;
     }
 }

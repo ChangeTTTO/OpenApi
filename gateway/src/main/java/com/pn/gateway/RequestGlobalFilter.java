@@ -1,10 +1,7 @@
 package com.pn.gateway;
 import cn.hutool.crypto.SignUtil;
-import cn.hutool.crypto.asymmetric.KeyType;
-import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.crypto.asymmetric.Sign;
 import cn.hutool.crypto.asymmetric.SignAlgorithm;
-import com.pn.feign.util.RsaUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -19,8 +16,6 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.concurrent.CompletableFuture;
 
@@ -33,12 +28,12 @@ public class RequestGlobalFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.error("进入网关");
+        log.error("进入全局拦截器");
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
         String publicKey = headers.getFirst("OpenApi-Public-Key");
         String signature = headers.getFirst("OpenApi-Signature");
-
+        //1.登录用户身份验证
         return Mono.fromRunnable(() -> {
             rabbitTemplate.convertAndSend("amq.direct", "findUser", publicKey);
             future.thenAccept(user -> {
@@ -57,7 +52,7 @@ public class RequestGlobalFilter implements GlobalFilter {
                         if (verify) {
                             //通过
                             log.info("验证通过");
-                            return;
+                            chain.filter(exchange);
                         } else {
                             throw new RuntimeException("数据签名验证失败");
                         }

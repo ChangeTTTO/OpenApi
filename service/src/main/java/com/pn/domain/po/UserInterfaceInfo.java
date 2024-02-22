@@ -39,7 +39,7 @@ public class UserInterfaceInfo implements Serializable {
     /**
      * 接口 id
      */
-    private Long interfaceInfoId;
+    private String interfaceInfoId;
 
     /**
      * 总调用次数

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @RestController
 @Slf4j
+@CrossOrigin
 public class UserController {
     @Resource
     private UserService userService;

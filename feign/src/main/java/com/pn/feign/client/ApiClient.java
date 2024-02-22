@@ -1,4 +1,6 @@
 package com.pn.feign.client;
+import com.pn.api.domain.dto.EnglishParams;
+import com.pn.api.domain.dto.WeatherParams;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -9,8 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(value = "api",contextId = "2")
 public interface ApiClient {
-    @PostMapping("/")
+    @PostMapping("/name")
     String getName(@RequestBody Object name);
-    @PostMapping("/dog/keji")
-     String getKeji();
+    @GetMapping("/loveTalk")
+    String randomLoveTalk();
+    @GetMapping("/poisonousChickenSoup")
+    public String getPoisonousChickenSoup();
+    @GetMapping("/randomWallpaper")
+    public String getRandomWallpaper();
+    @GetMapping("/english")
+    public String getEnglishInfo(EnglishParams Params);
 }

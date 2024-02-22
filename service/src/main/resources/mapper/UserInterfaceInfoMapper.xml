@@ -8,10 +8,11 @@
     </insert>
     <select id="findInterfaceIdByUserId" resultType="com.pn.domain.po.UserInterfaceInfo"
             parameterType="java.lang.String">
-        select interfaceInfoId from memo.user_interface_info where userId = #{userId}
+        select interfaceInfoId from memo.user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
     </select>
     <select id="findLeftNumByUserId" resultType="com.pn.domain.po.UserInterfaceInfo"
             parameterType="java.lang.String">
-        select * from memo.user_interface_info where userId = #{userId}
+        select * from memo.user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
     </select>
+
 </mapper>

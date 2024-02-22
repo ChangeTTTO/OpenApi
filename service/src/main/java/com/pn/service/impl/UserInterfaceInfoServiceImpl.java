@@ -26,12 +26,15 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
     }
 
     @Override
-    public UserInterfaceInfo findInterfaceIdByUserId(String userId) {
-        return userInterfaceInfoMapper.findInterfaceIdByUserId(userId);
+    public UserInterfaceInfo findInterfaceIdByUserId(String userId, String interfaceId) {
+        return userInterfaceInfoMapper.findInterfaceIdByUserId(userId,interfaceId);
     }
 
     @Override
-    public UserInterfaceInfo findLeftNumByUserId(String userId) {
-        return userInterfaceInfoMapper.findLeftNumByUserId(userId);
+    public UserInterfaceInfo findLeftNumByUserId(String userId, String interfaceId) {
+        return userInterfaceInfoMapper.findLeftNumByUserId(userId,interfaceId);
     }
+
+
+
 }
