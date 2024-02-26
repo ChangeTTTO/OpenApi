@@ -73,6 +73,11 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
             <version>4.0.3</version>
         </dependency>
+        <!--限流用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.pn</groupId>
             <artifactId>feign</artifactId>

@@ -1,4 +1,4 @@
-package com.pn.feign.domain.dto;
+package com.pn.api.domain.dto;
 
 import lombok.Data;
 
@@ -23,4 +23,5 @@ public class invokeDTO {
      * 调用人id
      */
     private String userId;
+
 }

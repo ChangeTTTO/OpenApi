@@ -42,7 +42,7 @@ public class UserInterfaceInfoController {
     }
 
     /**
-     * 根据用户id找查接口id
+     * 根据用户id和接口id接口对应关系
      */
     @PostMapping("/findInterfaceIdByUserId")
     @Operation(summary = "根据用户id和接口id接口对应关系")

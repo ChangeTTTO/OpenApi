@@ -18,6 +18,8 @@ public interface UserMapper {
     void register(String email, String password,String publicKey,String privateKey,String sign);
 
     User findUserByPublicKey(String publicKey);
+
+    void setVip(String email);
 }
 
 

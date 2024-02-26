@@ -33,7 +33,7 @@ public class InterfaceInfoControllerTest {
         Sign pen2 = SignUtil.sign(SignAlgorithm.SHA256withRSA,privateKey,publicKey);
         boolean verify = pen2.verify("email".getBytes(), decodedBytes);
         System.out.println(verify);*/
-        String body = HttpRequest.get("https://api.btstu.cn/sjbz/api.php").execute().body();
+        String body = HttpRequest.get("https://api.vvhan.com/api/love").execute().body();
         System.out.println(body);
     }
 }

@@ -7,6 +7,9 @@
         insert into memo.user (email,userPassword,publickey,privatekey,sign)
         values (#{email},#{password},#{publicKey},#{privateKey},#{sign})
     </insert>
+    <update id="setVip" parameterType="java.lang.String">
+        update memo.user set userRole = 'vip' where email = #{email}
+    </update>
 
     <select id="getUserByEmail" resultType="com.pn.domain.vo.userLoginVo" parameterType="java.lang.String">
         select * from memo.user where email = #{email}

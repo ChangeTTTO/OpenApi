@@ -22,7 +22,7 @@ public class InterfaceInfoServiceImpl implements InterfaceInfoService {
    @Resource
     private  InterfaceInfoMapper interfaceInfoMapper;
     @Override
-    public ArrayList<InterfaceInfoVo> getInterfaceInfo(int currentPage, int pageSize) {
+    public ArrayList<InterfaceInfoVo> getInterfaceInfo(int currentPage, int pageSize ) {
         return interfaceInfoMapper.getInterfaceInfoPage(currentPage,pageSize);
     }
 

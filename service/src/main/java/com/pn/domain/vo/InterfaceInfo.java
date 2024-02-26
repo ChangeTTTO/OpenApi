@@ -32,9 +32,9 @@ public class InterfaceInfo {
     private String requestHeader;
 
     /**
-     * 响应头
+     * 请求示例
      */
-    private String responseHeader;
+    private String requestExample;
 
     /**
      * 接口状态（0-关闭，1-开启）

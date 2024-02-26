@@ -18,5 +18,6 @@ import java.util.ArrayList;
 public interface InterfaceInfoMapper {
     ArrayList<InterfaceInfoVo> getInterfaceInfoPage(int currentPage, int pageSize);
     InterfaceInfo getInterfaceInfo(int id);
+    ArrayList<InterfaceInfoVo> getVipInterface();
 }
 

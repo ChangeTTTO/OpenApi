@@ -51,12 +51,14 @@ public class InterfaceInfo implements Serializable {
      * 请求头
      */
     private String requestHeader;
-
     /**
-     * 响应头
+     * 接口细节描述
      */
-    private String responseHeader;
-
+    private String detail;
+    /**
+     * 请求示例
+     */
+    private String requestExample;
     /**
      * 接口状态（0-关闭，1-开启）
      */

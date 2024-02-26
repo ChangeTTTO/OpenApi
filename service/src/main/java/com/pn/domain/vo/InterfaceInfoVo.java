@@ -12,6 +12,9 @@ public class InterfaceInfoVo {
      * 描述
      */
     private String description;
-
+    /**
+     * 接口细节描述
+     */
+    private String detail;
 
 }

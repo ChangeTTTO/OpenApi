@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService {
     public userLoginVo findUserByEmail(String email) {
         return userMapper.getUserByEmail(email);
     }
+
+    @Override
+    public void setVip(String email) {
+        userMapper.setVip(email);
+    }
 }
 
 

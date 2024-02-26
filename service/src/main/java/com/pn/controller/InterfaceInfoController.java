@@ -9,6 +9,7 @@ import com.pn.domain.po.UserInterfaceInfo;
 import com.pn.feign.client.ApiClient;
 import com.pn.mapper.CommonMapper;
 
+import com.pn.mapper.InterfaceInfoMapper;
 import com.pn.service.InterfaceInfoService;
 import com.pn.service.UserInterfaceInfoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,11 +40,19 @@ public class InterfaceInfoController {
     @Resource
     private  CommonMapper commonMapper;
 
+    @Resource
+    private InterfaceInfoMapper interfaceInfoMapper;
     @GetMapping("/all")
-    @Operation(summary = "分页获取所有接口信息")
+    @Operation(summary = "分页获取免费接口信息")
     @CrossOrigin
     public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
         return Result.success(interfaceInfoService.getInterfaceInfo(currentPage,pageSize));
+    }
+    @GetMapping("/getVipInterface")
+    @Operation(summary = "获取vip接口信息")
+    @CrossOrigin
+    public Result getVipInterface(){
+        return Result.success(interfaceInfoMapper.getVipInterface());
     }
     @GetMapping("/{id}")
     @CrossOrigin
@@ -57,7 +66,7 @@ public class InterfaceInfoController {
      */
     @PostMapping("/invoke")
     @Operation(summary = "目标接口调用")
-    public Result invokeInterface(@RequestBody invokeDTO invokeDTO) {
+    public Object invokeInterface(@RequestBody invokeDTO invokeDTO) {
         Object invoke;
         String interfaceName = invokeDTO.getInterfaceName();
         Object params = invokeDTO.getRequestParams();
@@ -66,14 +75,15 @@ public class InterfaceInfoController {
         Integer leftNum = user.getLeftNum();
         Long id = user.getId();
         if (leftNum==0){
-            return Result.error("调用次数已耗尽");
+            return "次数已用尽";
         }
+
         //2.接口id不存在，将返回错误
         if (!Objects.equals(invokeDTO.getInterfaceId(), user.getInterfaceInfoId())){
-            return Result.error("接口id错误");
+            return "接口id错误";
         }
         //3.根据有无参数调用目标接口
-        if (ObjUtil.isEmpty(params)){
+        if (ObjUtil.isNull(params)){
              invoke = ReflectUtil.invoke(apiClient, interfaceName);
         }else {
             invoke = ReflectUtil.invoke(apiClient, interfaceName,params);
@@ -81,7 +91,7 @@ public class InterfaceInfoController {
         //3.调用后该接口剩余调用次数-1
         commonMapper.decrementCount("user_interface_info", String.valueOf(id),"leftNum");
 
-            return Result.success(invoke);
+            return invoke;
         }
     }
 

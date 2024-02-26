@@ -1,6 +1,8 @@
 package com.pn.feign.client;
+import com.pn.api.common.Result;
 import com.pn.api.domain.dto.EnglishParams;
 import com.pn.api.domain.dto.WeatherParams;
+import com.pn.api.domain.dto.invokeDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,11 +16,11 @@ public interface ApiClient {
     @PostMapping("/name")
     String getName(@RequestBody Object name);
     @GetMapping("/loveTalk")
-    String randomLoveTalk();
+    Result randomLoveTalk();
     @GetMapping("/poisonousChickenSoup")
     public String getPoisonousChickenSoup();
     @GetMapping("/randomWallpaper")
     public String getRandomWallpaper();
     @GetMapping("/english")
-    public String getEnglishInfo(EnglishParams Params);
+    public String getEnglishInfo();
 }

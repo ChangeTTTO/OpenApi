@@ -78,4 +78,18 @@ public class UserController {
         rabbitTemplate.convertAndSend("amq.direct", "getUser", user);
         return null;
     }
+    @PostMapping("/vip")
+    @Operation(summary = "根据用户邮箱vip充值")
+    public Result setVip(@RequestBody UserLoginDto user){
+        StpUtil.checkLogin();
+        userLoginVo dbUser = userService.findUserByEmail(user.getEmail());
+        System.out.println(user.getEmail());
+        System.out.println(dbUser.getEmail());
+       /* if (!(user.getEmail().equals(dbUser.getEmail()))){
+            return Result.error("错误");
+        }*/
+        //设置为vip用户
+        userService.setVip(user.getEmail());
+        return Result.success("成功");
+    }
 }

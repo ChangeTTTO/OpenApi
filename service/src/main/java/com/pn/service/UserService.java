@@ -20,4 +20,6 @@ public interface UserService{
     void register(String email, String password);
 
     userLoginVo findUserByEmail(String email);
+
+    void setVip(String email);
 }
