@@ -25,7 +25,7 @@
 
 ## 网站导航 🧭
 
-- [**OpenApI 前端 🏘**️](https://github.com/ChangeTTTO/OpenApi-frontend)
+- [**OpenApI 前端 🏘**️](https://github.com/ChangeTTTO/OpenApi_frontend)
 
 ## 目录结构 📑
 
