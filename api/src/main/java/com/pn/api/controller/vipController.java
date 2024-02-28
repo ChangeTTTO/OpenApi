@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.annotation.Target;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/vip")
+
 public class vipController {
     /**
      * 获取随机毒鸡汤

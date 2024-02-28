@@ -9,6 +9,7 @@ import com.pn.domain.vo.userLoginVo;
 import com.pn.mapper.UserMapper;
 import com.pn.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @CrossOrigin
+@Tag(name = "用户接口")
 public class UserController {
     @Resource
     private UserService userService;
