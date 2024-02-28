@@ -29,7 +29,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/interfaceInfo")
 @Tag(name = "接口信息")
-
 public class InterfaceInfoController {
     @Resource
     private  InterfaceInfoService interfaceInfoService;
@@ -66,6 +65,7 @@ public class InterfaceInfoController {
      */
     @PostMapping("/invoke")
     @Operation(summary = "目标接口调用")
+    @CrossOrigin
     public Object invokeInterface(@RequestBody invokeDTO invokeDTO) {
         Object invoke;
         String interfaceName = invokeDTO.getInterfaceName();

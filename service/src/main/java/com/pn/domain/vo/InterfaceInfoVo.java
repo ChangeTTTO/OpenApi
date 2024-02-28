@@ -16,5 +16,5 @@ public class InterfaceInfoVo {
      * 接口细节描述
      */
     private String detail;
-
+    private String requestParams;
 }

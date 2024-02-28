@@ -66,7 +66,7 @@ public class RequestGlobalFilter implements GlobalFilter {
             }).exceptionally(throwable -> {
                 log.error("身份验证异常", throwable);
                 throw new RuntimeException("身份验证异常", throwable);
-            }).join();
+            }).join(); //等待线程结束
         }).then(chain.filter(exchange));
     }
 

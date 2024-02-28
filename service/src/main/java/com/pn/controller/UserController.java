@@ -81,7 +81,6 @@ public class UserController {
     @PostMapping("/vip")
     @Operation(summary = "根据用户邮箱vip充值")
     public Result setVip(@RequestBody UserLoginDto user){
-        StpUtil.checkLogin();
         userLoginVo dbUser = userService.findUserByEmail(user.getEmail());
         System.out.println(user.getEmail());
         System.out.println(dbUser.getEmail());
@@ -91,5 +90,11 @@ public class UserController {
         //设置为vip用户
         userService.setVip(user.getEmail());
         return Result.success("成功");
+    }
+    @GetMapping("/logout")
+    @Operation(summary = "退出登录")
+    Result logout(){
+        StpUtil.logout();
+        return Result.success();
     }
 }
