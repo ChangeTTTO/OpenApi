@@ -6,21 +6,18 @@ import com.pn.api.domain.dto.invokeDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "api",contextId = "2")
 public interface ApiClient {
-    @PostMapping("/name")
+    @PostMapping("/api/name")
     String getName(@RequestBody Object name);
-    @GetMapping("/loveTalk")
+    @GetMapping("/api/loveTalk")
     Result randomLoveTalk();
-    @GetMapping("/poisonousChickenSoup")
+    @GetMapping("/api/poisonousChickenSoup")
     public String getPoisonousChickenSoup();
-    @GetMapping("/randomWallpaper")
+    @GetMapping("/api/randomWallpaper")
     public String getRandomWallpaper();
-    @GetMapping("/english")
+    @GetMapping("/api/english")
     public String getEnglishInfo();
 }

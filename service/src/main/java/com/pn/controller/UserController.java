@@ -9,6 +9,7 @@ import com.pn.domain.vo.userLoginVo;
 import com.pn.mapper.UserMapper;
 import com.pn.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @CrossOrigin
+@Tag(name = "用户接口")
 public class UserController {
     @Resource
     private UserService userService;
@@ -81,7 +83,6 @@ public class UserController {
     @PostMapping("/vip")
     @Operation(summary = "根据用户邮箱vip充值")
     public Result setVip(@RequestBody UserLoginDto user){
-        StpUtil.checkLogin();
         userLoginVo dbUser = userService.findUserByEmail(user.getEmail());
         System.out.println(user.getEmail());
         System.out.println(dbUser.getEmail());
@@ -91,5 +92,11 @@ public class UserController {
         //设置为vip用户
         userService.setVip(user.getEmail());
         return Result.success("成功");
+    }
+    @GetMapping("/logout")
+    @Operation(summary = "退出登录")
+    Result logout(){
+        StpUtil.logout();
+        return Result.success();
     }
 }

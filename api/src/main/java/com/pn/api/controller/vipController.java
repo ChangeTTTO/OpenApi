@@ -7,12 +7,17 @@ import com.pn.api.domain.dto.HoroscopeParams;
 import com.pn.api.domain.dto.IpInfoParams;
 import com.pn.api.domain.dto.WeatherParams;
 import com.pn.api.utils.RequestUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.annotation.Target;
+
 @RestController
+@CrossOrigin
 @RequestMapping("/vip")
+
 public class vipController {
     /**
      * 获取随机毒鸡汤
