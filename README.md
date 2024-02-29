@@ -21,7 +21,7 @@
 
 # 已实现接口见文档
 
-- [**Swagger文档**️](http://localhost:1111/doc.html#/home)
+- [**Swagger文档**️](http://8.134.204.252:1111/doc.html#/home)
 
 ## 网站导航 🧭
 
@@ -44,7 +44,7 @@
 
 ### 前端
 
-环境要求：Node.js >= 18
+环境要求：Node.js >= 20
 
 安装依赖：
 
