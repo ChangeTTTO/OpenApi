@@ -25,18 +25,18 @@
 
 ## 网站导航 🧭
 
-- [**OpenApI 前端 🏘**️](https://github.com/ChangeTTTO/OpenApi-frontend)
+- [**OpenApI 前端 🏘**️](https://github.com/ChangeTTTO/OpenApi_frontend)
 
 ## 目录结构 📑
 
 
 | 目录                                                     | 描述               |
 |--------------------------------------------------------| ------------------ |
-| **🏘️ [OpenApi](./OpenApi)**             | OpenApI后端父模块 |
-| **🏘️ [service](./OpenApi/service)**               | 业务模块       |
-| **🕸️ [gateway](./OpenApi/gateway)**             | 网关模块           |
-| **🔗 [api](./OpenApi/api)**          | 目标接口模块           |
-|   **🔗 [feign](./OpenApi/feign)**                        | 远程调用模块 |
+| **🏘️ [OpenApi](./)**             | OpenApI后端父模块 |
+| **🏘️ [service](/service)**               | 业务模块       |
+| **🕸️ [gateway](/gateway)**             | 网关模块           |
+| **🔗 [api](/api)**          | 目标接口模块           |
+|   **🔗 [feign](/feign)**                        | 远程调用模块 |
 
 ## 项目流程 🗺️
 
@@ -44,7 +44,7 @@
 
 ### 前端
 
-环境要求：Node.js >= 18
+环境要求：Node.js >= 20
 
 安装依赖：
 
