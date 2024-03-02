@@ -4,17 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pn.mapper.UserMapper">
     <insert id="register">
-        insert into memo.user (email,userPassword,publickey,privatekey,sign)
+        insert into user (email,userPassword,publickey,privatekey,sign)
         values (#{email},#{password},#{publicKey},#{privateKey},#{sign})
     </insert>
     <update id="setVip" parameterType="java.lang.String">
-        update memo.user set userRole = 'vip' where email = #{email}
+        update user set userRole = 'vip' where email = #{email}
     </update>
 
     <select id="getUserByEmail" resultType="com.pn.domain.vo.userLoginVo" parameterType="java.lang.String">
-        select * from memo.user where email = #{email}
+        select * from user where email = #{email}
     </select>
-    <select id="findUserByPublicKey" resultType="com.pn.domain.po.User">
-        select * from memo.user where publickey = #{publicKey}
+    <select id="findUserByPublicKey" resultType="com.pn.feign.domain.User">
+        select * from user where publickey = #{publicKey}
     </select>
 </mapper>

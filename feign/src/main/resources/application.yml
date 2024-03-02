@@ -1,8 +1,4 @@
-server:
-  port: 8801
 spring:
-  cloud:
-    nacos:
-      server-addr: localhost:8848
-  application:
-    name: feign
+  profiles:
+    #active: dev
+    active: prod

@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
     }
+    //创建一个消息转换器，用于在消息发送和接收过程中将消息体与 JSON 格式的数据进行转换。
     @Bean
     public MessageConverter jsonMessageConverter(){
         return new Jackson2JsonMessageConverter();

@@ -1,8 +1,4 @@
-server:
-  port: 8082
 spring:
-  cloud:
-    nacos:
-      server-addr: localhost:8848
-  application:
-    name: api
+  profiles:
+    #active: dev
+    active: prod

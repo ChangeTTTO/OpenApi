@@ -12,12 +12,4 @@ public class userRegisterDTO {
      * 密码
      */
     private String password;
-    /**
-     * 公钥
-     */
-    private String publicKey;
-    /**
-     * 私钥
-     */
-    private String privateKey;
 }

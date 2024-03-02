@@ -3,6 +3,6 @@
 <mapper namespace="com.pn.mapper.ParamsDetailsMapper">
 
     <select id="getAll" resultType="com.pn.domain.po.ParamsDetails" parameterType="long">
-        select * from memo.params_details where interfaceId = #{id}
+        select * from params_details where interfaceId = #{id}
     </select>
 </mapper>

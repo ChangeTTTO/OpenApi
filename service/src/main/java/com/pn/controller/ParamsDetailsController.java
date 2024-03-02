@@ -32,7 +32,6 @@ public class ParamsDetailsController {
  * 根据接口id查询所有
  */
 @GetMapping("/getAll")
-@CrossOrigin
 public Result getAll(long id){
     ArrayList<ParamsDetails> Details = paramsDetailsMapper.getAll(id);
     return Result.success(Details);

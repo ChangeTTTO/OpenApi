@@ -1,16 +1,16 @@
 package com.pn.controller;
-
-import cn.dev33.satoken.stp.StpUtil;
+import com.pn.feign.domain.User;
 import com.pn.common.Result;
 import com.pn.domain.dto.UserLoginDto;
 import com.pn.domain.dto.userRegisterDTO;
-import com.pn.domain.po.User;
+
 import com.pn.domain.vo.userLoginVo;
 import com.pn.mapper.UserMapper;
 import com.pn.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -19,10 +19,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpRequest;
+
 @RequestMapping("/user")
 @RestController
 @Slf4j
-@CrossOrigin
 @Tag(name = "用户接口")
 public class UserController {
     @Resource
@@ -33,7 +34,7 @@ public class UserController {
     private RabbitTemplate rabbitTemplate;
     @PostMapping("/login")
     @Operation(summary = "登录")
-    public Result login(@RequestBody UserLoginDto user){
+    public Result login(@RequestBody UserLoginDto user, HttpServletRequest request){
         if (user==null){
             return Result.error("参数错误");
         }
@@ -46,7 +47,7 @@ public class UserController {
         }
 
         //校验完成，登陆成功,将session保存到redis
-        StpUtil.login(user.getEmail());
+        request.getSession().setAttribute("user",user.getEmail());
 
         return Result.success(dbUser);
     }
@@ -68,17 +69,16 @@ public class UserController {
     @GetMapping("/findUserByPublicKey")
     @Operation(summary = "根据公钥查用户")
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(name = "gateway"),
+            value = @Queue(name = "findUser",durable = "false"),
             exchange = @Exchange(name = "amq.direct",type ="direct"),
             key = {"findUser"}
     ))
-    public User findUserByPublicKey(String publicKey){
+    public void findUserByPublicKey(String publicKey){
         User user = userMapper.findUserByPublicKey(publicKey);
         if (user==null){
-            log.error("未查询到用户");
+            throw new RuntimeException("用户不匹配");
         }
         rabbitTemplate.convertAndSend("amq.direct", "getUser", user);
-        return null;
     }
     @PostMapping("/vip")
     @Operation(summary = "根据用户邮箱vip充值")
@@ -95,8 +95,8 @@ public class UserController {
     }
     @GetMapping("/logout")
     @Operation(summary = "退出登录")
-    Result logout(){
-        StpUtil.logout();
+    Result logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
         return Result.success();
     }
 }

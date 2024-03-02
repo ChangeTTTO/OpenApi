@@ -1,8 +1,6 @@
 package com.pn.api.controller;
 import cn.hutool.http.HttpRequest;
-import cn.hutool.json.JSONUtil;
-import com.pn.api.common.Result;
-import com.pn.api.domain.dto.*;
+import com.pn.api.R;
 import com.pn.api.utils.RequestUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +17,10 @@ public class ServiceController {
      * 免费接口
      */
     @GetMapping("/loveTalk")
-    public Result randomLoveTalk() {
+    public R randomLoveTalk() {
         String result = HttpRequest.get("https://api.vvhan.com/api/love").execute().body();
 
-        return Result.success(result);
+        return R.success(result);
     }
 
     /**

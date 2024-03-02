@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/userInterfaceInfo")
 @RequiredArgsConstructor
-@CrossOrigin
 public class UserInterfaceInfoController {
     private final UserInterfaceInfoService userInterfaceInfoService;
     /**

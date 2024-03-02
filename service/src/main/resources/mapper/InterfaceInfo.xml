@@ -3,13 +3,13 @@
 <mapper namespace="com.pn.mapper.InterfaceInfoMapper">
 
     <select id="getInterfaceInfoPage" resultType="com.pn.domain.vo.InterfaceInfoVo">
-        select * from memo.interface_info where status =0 limit #{currentPage},#{pageSize}
+        select * from interface_info where status =0 limit #{currentPage},#{pageSize}
     </select>
     <select id="getInterfaceInfo" resultType="com.pn.domain.po.InterfaceInfo">
-        select *  from memo.interface_info where id=#{id}
+        select *  from interface_info where id=#{id}
     </select>
     <select id="getVipInterface" resultType="com.pn.domain.vo.InterfaceInfoVo">
-        select * from memo.interface_info where status =1
+        select * from interface_info where status =1
     </select>
 
 </mapper>

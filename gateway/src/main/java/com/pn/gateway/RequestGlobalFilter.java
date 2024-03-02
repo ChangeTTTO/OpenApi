@@ -2,6 +2,7 @@ package com.pn.gateway;
 import cn.hutool.crypto.SignUtil;
 import cn.hutool.crypto.asymmetric.Sign;
 import cn.hutool.crypto.asymmetric.SignAlgorithm;
+import com.pn.feign.domain.User;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -42,7 +43,7 @@ public class RequestGlobalFilter implements GlobalFilter {
                     String userSign = user.getSign();
                     String email = user.getEmail();
                     String privateKey = user.getPrivateKey();
-                    log.error(email);
+                    System.out.println("数据库用户的邮箱是"+email);
                     if (publicKey.equals(userPublicKey) && signature.equals(userSign)) {
                         Sign pen = SignUtil.sign(SignAlgorithm.SHA256withRSA, privateKey, publicKey);
                         //base64转byte[]
@@ -54,33 +55,32 @@ public class RequestGlobalFilter implements GlobalFilter {
                             log.info("验证通过");
                             chain.filter(exchange);
                         } else {
-                            throw new RuntimeException("数据签名验证失败");
+                            throw new RuntimeException("1");
                         }
                     } else {
-                        throw new RuntimeException("数据不完整或已被篡改");
+                        throw new RuntimeException("用户不匹配");
                     }
                 } catch (Exception e) {
-                    log.error("身份验证异常", e);
-                    throw new RuntimeException("身份验证异常", e);
+                    throw new RuntimeException("3", e);
                 }
             }).exceptionally(throwable -> {
-                log.error("身份验证异常", throwable);
-                throw new RuntimeException("身份验证异常", throwable);
+                throw new RuntimeException("4", throwable);
             }).join(); //等待线程结束
         }).then(chain.filter(exchange));
     }
 
     @RabbitListener(bindings = @QueueBinding(
-            value = @Queue(name = "gateway"),
+            value = @Queue(name = "getUser",durable = "false"),
             exchange = @Exchange(name = "amq.direct", type = "direct"),
             key = {"getUser"}
     ))
     public void getUser(User user) {
         try {
+            //将user作为结果
             future.complete(user);
+            System.out.println("得到的用户是:"+user.toString());
         } catch (Exception e) {
-            log.error("获取用户信息失败", e);
-            throw new RuntimeException("获取用户信息失败", e);
+            throw new RuntimeException("5", e);
         }
     }
 }

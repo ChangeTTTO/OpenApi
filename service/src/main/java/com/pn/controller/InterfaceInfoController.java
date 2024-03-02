@@ -1,6 +1,4 @@
 package com.pn.controller;
-
-
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.pn.common.Result;
@@ -8,7 +6,6 @@ import com.pn.domain.dto.invokeDTO;
 import com.pn.domain.po.UserInterfaceInfo;
 import com.pn.feign.client.ApiClient;
 import com.pn.mapper.CommonMapper;
-
 import com.pn.mapper.InterfaceInfoMapper;
 import com.pn.service.InterfaceInfoService;
 import com.pn.service.UserInterfaceInfoService;
@@ -43,18 +40,17 @@ public class InterfaceInfoController {
     private InterfaceInfoMapper interfaceInfoMapper;
     @GetMapping("/all")
     @Operation(summary = "分页获取免费接口信息")
-    @CrossOrigin
-    public Result getInterfaceInfo(Integer currentPage,Integer pageSize){
+
+    public Result getInterfaceInfo(Integer currentPage, Integer pageSize){
         return Result.success(interfaceInfoService.getInterfaceInfo(currentPage,pageSize));
     }
     @GetMapping("/getVipInterface")
     @Operation(summary = "获取vip接口信息")
-    @CrossOrigin
+
     public Result getVipInterface(){
         return Result.success(interfaceInfoMapper.getVipInterface());
     }
     @GetMapping("/{id}")
-    @CrossOrigin
     @Operation(summary = "查看接口信息")
     public Result getInterfaceInfo(@PathVariable int id) {
         return Result.success(interfaceInfoService.getInterfaceInfo(id));
@@ -65,7 +61,6 @@ public class InterfaceInfoController {
      */
     @PostMapping("/invoke")
     @Operation(summary = "目标接口调用")
-    @CrossOrigin
     public Object invokeInterface(@RequestBody invokeDTO invokeDTO) {
         Object invoke;
         String interfaceName = invokeDTO.getInterfaceName();
@@ -93,6 +88,35 @@ public class InterfaceInfoController {
 
             return invoke;
         }
+
+        @GetMapping("/test")
+        public Result test(){
+        return Result.success();
+        }
+    /**
+     * 获取接口调用次数
+     */
+    @PostMapping("/getCount")
+    @Operation(summary = "获取接口调用次数")
+
+    public Result getCount(@RequestBody invokeDTO invokeDTO){
+        //根据用户id和接口id查找数据,查看是否有对应关系
+        UserInterfaceInfo id = userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId(),invokeDTO.getInterfaceId());
+        if (id!=null){
+            return Result.error("不可重复获取调用次数");
+        }
+        userInterfaceInfoService.getCount(invokeDTO.getInterfaceId(),invokeDTO.getUserId());
+        return Result.success("获取成功");
+    }
+
+    /**
+     * 根据用户id和接口id接口对应关系
+     */
+    @PostMapping("/findInterfaceIdByUserId")
+    @Operation(summary = "根据用户id和接口id接口对应关系")
+    public Result findInterfaceIdByUserId(invokeDTO invokeDTO){
+        return Result.success(userInterfaceInfoService.findInterfaceIdByUserId(invokeDTO.getUserId(),invokeDTO.getInterfaceId())) ;
+    }
     }
 
 

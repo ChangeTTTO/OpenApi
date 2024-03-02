@@ -1,0 +1,80 @@
+server:
+  port: 9999
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        # 每次取 1 条消息进行消费，消费成功后再去取下一条消息
+        # 防止多个消费者被均匀分配消息，让消费能力强的消费者能够获取更多的消息
+        prefetch: 1
+  #  main:
+  #    web-application-type: reactive
+  application:
+    name: gateway
+  cloud:
+    sentinel:
+      scg:
+        fallback:
+          # 响应模式有 redirect 和 response 两种
+          mode: response
+          response-status: 200
+          response-body: '{"code": 429, "message": "朋友，请限制你的访问频率哦"}'
+
+      transport:
+        dashboard: localhost:8080
+      datasource:
+        myGatewayRule:
+          nacos:
+            serverAddr: localhost:8848
+            groupId: DEFAULT_GROUP
+            dataId: myGatewayRule.json
+            # 此处必须设置为 gw-flow 网关流控规则才会生效
+            ruleType: gw-flow
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: -1
+      default-filters:
+        - AddResponseHeader=source, Pn #流量染色
+        - DedupeResponseHeader=Vary Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_UNIQUE
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+      routes:
+        - id: api
+          uri: lb://api
+          predicates:
+            - Path=/api/**
+        - id: service
+          uri: lb://service
+          predicates:
+            - Path=/**
+
+          #限流配置
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10 #允许用户每秒处理的请求数。设置的数值就代表 每秒向令牌桶添加多少个令牌 。
+                redis-rate-limiter.burstCapacity: 20 #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求。
+                key-resolver: "#{@PublicKeyResolver}"
+
+  data:
+    redis:
+      port: 6379
+      host: localhost
+      database: 2
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+

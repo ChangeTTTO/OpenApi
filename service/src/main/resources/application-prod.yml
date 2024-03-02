@@ -1,0 +1,41 @@
+# 公共配置文件
+server:
+  port: 1111
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 8.134.204.252
+    port: 5672
+    username: pn
+    password: 125800
+  cloud:
+    nacos:
+      server-addr: 8.134.204.252:8848
+  # redis 配置
+  data:
+    redis:
+      port: 6379
+      host: 8.134.204.252
+      database: 1
+  application:
+    name: service
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://8.134.204.252:3306/openapi
+    username: pn
+    password: 125800
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+sa-token:
+  token-name: authorization
+
+

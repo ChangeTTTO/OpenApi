@@ -3,7 +3,6 @@ package com.pn.client.serviceClient;
 
 import com.pn.domain.vo.userLoginVo;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(value = "service",contextId = "1")

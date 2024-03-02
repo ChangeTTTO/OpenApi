@@ -3,16 +3,16 @@
 <mapper namespace="com.pn.mapper.UserInterfaceInfoMapper">
 
     <insert id="getCount">
-        insert into memo.user_interface_info (userId,interfaceInfoId,totalNum,leftNum)
+        insert into user_interface_info (userId,interfaceInfoId,totalNum,leftNum)
         values (#{userId},#{interfaceId},20,20)
     </insert>
     <select id="findInterfaceIdByUserId" resultType="com.pn.domain.po.UserInterfaceInfo"
             parameterType="java.lang.String">
-        select interfaceInfoId from memo.user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
+        select interfaceInfoId from user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
     </select>
     <select id="findLeftNumByUserId" resultType="com.pn.domain.po.UserInterfaceInfo"
             parameterType="java.lang.String">
-        select * from memo.user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
+        select * from user_interface_info where userId = #{userId} and interfaceInfoId =#{interfaceId}
     </select>
 
 </mapper>

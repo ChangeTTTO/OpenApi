@@ -2,7 +2,7 @@ package com.pn.api.controller;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
-import com.pn.api.common.Result;
+import com.pn.api.R;
 import com.pn.api.domain.dto.HoroscopeParams;
 import com.pn.api.domain.dto.IpInfoParams;
 import com.pn.api.domain.dto.WeatherParams;
@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.annotation.Target;
-
 @RestController
-@CrossOrigin
+
 @RequestMapping("/vip")
 
 public class vipController {
@@ -24,17 +22,17 @@ public class vipController {
      * 完成√
      */
     @GetMapping("/poisonousChickenSoup")
-    public Result getPoisonousChickenSoup() {
-        return  Result.success(HttpRequest.get("https://api.btstu.cn/yan/api.php").execute().body());
+    public R getPoisonousChickenSoup() {
+        return  R.success(HttpRequest.get("https://api.btstu.cn/yan/api.php").execute().body());
     }
 
     /**
      * 获取星座运势
      */
     @GetMapping("/horoscope")
-    public Result getHoroscope( HoroscopeParams horoscopeParams)  {
+    public R getHoroscope(HoroscopeParams horoscopeParams)  {
         String response = RequestUtils.get("https://api.vvhan.com/api/horoscope", horoscopeParams);
-        return JSONUtil.toBean(response, Result.class);
+        return JSONUtil.toBean(response, R.class);
     }
 
     /**
