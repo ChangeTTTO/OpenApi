@@ -1,5 +1,5 @@
 <h1 align="center">OpenApi 接口开放平台</h1>
-<p align="center"><strong>OpenApi 接口开放平台是一个为用户和开发者提供全面API接口调用服务的平台 🛠</strong></p>
+<p align="center"><strong>OpenApi 接口开放平台是一个为用户提供全面API接口调用服务的平台 🛠</strong></p>
 <div align="center">
     <img alt="" src="https://raster.shields.io/badge/Maven-3.9.5-red.svg"/>
     <a target="_blank" href="https://www.oracle.com/technetwork/java/javase/downloads/index.html">
@@ -17,9 +17,9 @@
 
 **🤵 作为普通用户可浏览免费接口并在线进行调试，作为会员可直接复制接口地址，添加参数根据自己的需求灵活调用。** 
 
- **💻 本项目为java后端项目，前端只做了一些核心功能，非必要功能就没用去做了。点击查看后端**
+ **💻 本项目为java后端项目，前端只做了一些核心功能，非必要功能就没用去做了**
 
-# 已实现接口见文档
+## 已实现接口见文档
 
 - [**Swagger文档**️](http://8.134.204.252:1111/doc.html#/home)
 
