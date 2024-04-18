@@ -1,11 +1,6 @@
 server:
   port: 9999
 spring:
-  rabbitmq:
-    host: 8.134.204.252
-    port: 5672
-    username: pn
-    password: 125800
   #  main:
   #    web-application-type: reactive
   application:
@@ -44,10 +39,10 @@ spring:
         - DedupeResponseHeader=Vary Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_UNIQUE
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
       routes:
-        - id: api
-          uri: lb://api
-          predicates:
-            - Path=/api/**
+        #        - id: api
+        #          uri: lb://api
+        #          predicates:
+        #            - Path=/api/**
         - id: service
           uri: lb://service
           predicates:

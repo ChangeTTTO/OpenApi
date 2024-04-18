@@ -1,8 +1,8 @@
 package com.pn.mapper;
 
 
+import com.pn.domain.po.User;
 import com.pn.domain.vo.userLoginVo;
-import com.pn.feign.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

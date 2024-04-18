@@ -9,20 +9,12 @@
     </parent>
     <artifactId>gateway</artifactId>
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <version>4.1.1</version>
         </dependency>
 
-
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
         <!--限流用-->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis-reactive -->
         <dependency>
@@ -61,17 +53,9 @@
             <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
             <version>2022.0.0.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.pn</groupId>
-            <artifactId>feign</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
-   <!-- <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -86,6 +70,6 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 
 </project>

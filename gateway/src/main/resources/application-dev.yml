@@ -1,18 +1,8 @@
 server:
   port: 9999
 spring:
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    listener:
-      simple:
-        # 每次取 1 条消息进行消费，消费成功后再去取下一条消息
-        # 防止多个消费者被均匀分配消息，让消费能力强的消费者能够获取更多的消息
-        prefetch: 1
-  #  main:
-  #    web-application-type: reactive
+#  main:
+#    web-application-type: reactive
   application:
     name: gateway
   cloud:
@@ -62,8 +52,8 @@ spring:
           filters:
             - name: RequestRateLimiter
               args:
-                redis-rate-limiter.replenishRate: 10 #允许用户每秒处理的请求数。设置的数值就代表 每秒向令牌桶添加多少个令牌 。
-                redis-rate-limiter.burstCapacity: 20 #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求。
+                redis-rate-limiter.replenishRate: 1 #允许用户每秒处理的请求数。设置的数值就代表 每秒向令牌桶添加多少个令牌 。
+                redis-rate-limiter.burstCapacity: 2 #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求。
                 key-resolver: "#{@PublicKeyResolver}"
 
   data:

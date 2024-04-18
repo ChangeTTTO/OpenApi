@@ -1,7 +1,8 @@
-package com.pn.feign.client;
-import com.pn.feign.util.R;
+package com.pn.client;
+
+import com.pn.R;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(value = "service",contextId = "2")
 public interface ApiClient {

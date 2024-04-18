@@ -1,4 +1,4 @@
-package com.pn.client.serviceClient;
+package com.pn.client;
 
 
 import com.pn.domain.vo.userLoginVo;
@@ -9,4 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface serviceClient {
     @GetMapping("/user/findUserByEmail")
     userLoginVo findUserByEmail(String email);
+    @GetMapping("/findUserByPublicKey")
+    userLoginVo findUserByPublicKey(String publicKey);
 }

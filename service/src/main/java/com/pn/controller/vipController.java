@@ -1,13 +1,10 @@
-package com.pn.api.controller;
+package com.pn.controller;
 
-import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONUtil;
-import com.pn.api.R;
-import com.pn.api.domain.dto.HoroscopeParams;
-import com.pn.api.domain.dto.IpInfoParams;
-import com.pn.api.domain.dto.WeatherParams;
-import com.pn.api.utils.RequestUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import com.pn.R;
+import com.pn.RequestUtils;
+import com.pn.domain.dto.HoroscopeParams;
+import com.pn.domain.dto.IpInfoParams;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

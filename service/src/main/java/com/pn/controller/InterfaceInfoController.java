@@ -1,10 +1,10 @@
 package com.pn.controller;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.ReflectUtil;
+import com.pn.client.ApiClient;
 import com.pn.common.Result;
 import com.pn.domain.dto.invokeDTO;
 import com.pn.domain.po.UserInterfaceInfo;
-import com.pn.feign.client.ApiClient;
 import com.pn.mapper.CommonMapper;
 import com.pn.mapper.InterfaceInfoMapper;
 import com.pn.service.InterfaceInfoService;

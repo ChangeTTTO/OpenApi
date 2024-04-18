@@ -36,6 +36,9 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
 sa-token:
-  token-name: authorization
+  #禁用cookie
+  is-read-cookie: true
 
+  # token名称 (同时也是cookie名称)
+  token-name: authorization
 
