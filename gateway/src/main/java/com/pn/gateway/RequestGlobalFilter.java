@@ -16,12 +16,23 @@ import reactor.core.publisher.Mono;
 import java.util.Base64;
 
 @Component
+@Slf4j
 public class RequestGlobalFilter implements GlobalFilter {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        boolean vip = request.getURI().getPath().contains("vip");
+        boolean ico = request.getURI().getPath().contains("ico");
+        log.info("请求路径为{}",request.getURI().getPath());
+        //如果是vip就不用进行任何校验。
+        if (vip){
+            log.info("vip用户");
+          return   chain.filter(exchange);
+        }if (ico){
+            return chain.filter(exchange);
+        }
         HttpHeaders headers = request.getHeaders();
         String publicKey = headers.getFirst("OpenApi-Public-Key");
         String signature = headers.getFirst("OpenApi-Signature");
@@ -50,6 +61,7 @@ public class RequestGlobalFilter implements GlobalFilter {
                     }
         return chain.filter(exchange);
     }
+
 
 }
 

@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.pn</groupId>
     <artifactId>OpenApi</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>service</module>

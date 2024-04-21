@@ -1,8 +1,8 @@
 server:
   port: 9999
 spring:
-#  main:
-#    web-application-type: reactive
+  #  main:
+  #    web-application-type: reactive
   application:
     name: gateway
   cloud:
@@ -13,17 +13,9 @@ spring:
           mode: response
           response-status: 200
           response-body: '{"code": 429, "message": "朋友，请限制你的访问频率哦"}'
-
       transport:
         dashboard: localhost:8080
-      datasource:
-        myGatewayRule:
-          nacos:
-            serverAddr: localhost:8848
-            groupId: DEFAULT_GROUP
-            dataId: myGatewayRule.json
-            # 此处必须设置为 gw-flow 网关流控规则才会生效
-            ruleType: gw-flow
+        port: 8719
     gateway:
       globalcors:
         add-to-simple-url-handler-mapping: true
@@ -39,10 +31,10 @@ spring:
         - DedupeResponseHeader=Vary Access-Control-Allow-Credentials Access-Control-Allow-Origin, RETAIN_UNIQUE
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
       routes:
-        - id: api
-          uri: lb://api
-          predicates:
-            - Path=/api/**
+        #        - id: api
+        #          uri: lb://api
+        #          predicates:
+        #            - Path=/api/**
         - id: service
           uri: lb://service
           predicates:

@@ -48,7 +48,7 @@ public class UserController {
 
         String jsonStr = JSONUtil.toJsonStr(dbUser);
         //校验完成，登陆成功,将用户信息保存到redis
-        stringRedisTemplate.opsForValue().set(email,jsonStr,30, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(email,jsonStr,30, TimeUnit.DAYS);
 
         return Result.success(dbUser);
     }

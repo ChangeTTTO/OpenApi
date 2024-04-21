@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.pn</groupId>
         <artifactId>OpenApi</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <artifactId>service</artifactId>
     <packaging>jar</packaging>
@@ -69,9 +69,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <classifier>exec</classifier>
-                </configuration>
             </plugin>
         </plugins>
     </build>
