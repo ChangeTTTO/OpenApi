@@ -21,7 +21,7 @@
 
 ## 已实现接口见文档
 
-- [**Swagger文档**️](http://8.134.204.252:1111/doc.html#/home)
+- [**Swagger文档**️](http://www.api-yikong.icu:1111/doc.html#/home)
 
 ## 网站导航 🧭
 
