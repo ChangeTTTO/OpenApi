@@ -44,7 +44,7 @@ spring:
           filters:
             - name: RequestRateLimiter
               args:
-                redis-rate-limiter.replenishRate: 1 #允许用户每秒处理的请求数。设置的数值就代表 每秒向令牌桶添加多少个令牌 。
+                redis-rate-limiter.replenishRate: 2 #允许用户每秒处理的请求数。设置的数值就代表 每秒向令牌桶添加多少个令牌 。
                 redis-rate-limiter.burstCapacity: 2 #令牌桶的容量，即允许在 1 秒内完成的最大请求数。设置为 0 则表示拒绝所有请求。
                 key-resolver: "#{@PublicKeyResolver}"
 

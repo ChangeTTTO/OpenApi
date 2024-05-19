@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "登录")
     public Result login(@RequestBody UserLoginDto user, HttpServletRequest request){
-        String email = user.getEmail();
+
         if (user.getEmail().length()<2 || user.getPassword().length()<2){
             return Result.error("数据格式不正确");
         }
@@ -46,9 +46,10 @@ public class UserController {
             return  Result.error("用户不存在");
         }
 
+        String publicKey = dbUser.getPublicKey();
         String jsonStr = JSONUtil.toJsonStr(dbUser);
         //校验完成，登陆成功,将用户信息保存到redis
-        stringRedisTemplate.opsForValue().set(email,jsonStr,30, TimeUnit.DAYS);
+        stringRedisTemplate.opsForValue().set(publicKey,jsonStr,30, TimeUnit.MINUTES);
 
         return Result.success(dbUser);
     }

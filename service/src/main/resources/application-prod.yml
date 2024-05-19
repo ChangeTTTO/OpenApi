@@ -6,6 +6,8 @@ spring:
     allow-bean-definition-overriding: true
   cloud:
     nacos:
+      discovery:
+        ephemeral: true # 设置为非临时实例
       server-addr: 110.41.53.219:8848
   # redis 配置
   data:
