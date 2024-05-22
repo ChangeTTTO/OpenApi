@@ -1,4 +1,4 @@
-<h1 align="center">OpenApi 接口开放平台</h1>
+<h1 align="center">OpenApi 接口调用平台</h1>
 <p align="center"><strong>OpenApi 接口开放平台是一个为用户提供全面API接口调用服务的平台 🛠</strong></p>
 <div align="center">
     <img alt="" src="https://raster.shields.io/badge/Maven-3.9.5-red.svg"/>
